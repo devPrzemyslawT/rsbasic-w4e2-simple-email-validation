@@ -2,16 +2,59 @@ import React from "react";
 import { useState } from "react";
 
 const Form = () => {
-	const [formState, setFormState] = useState(true);
+	const [formState, setFormState] = useState({
+		name: "",
+		email: "",
+		bloodGroup: "Group 0",
+		Sex: "Male",
+		formState: true,
+	});
+
+	const [policyState, setPolicyState] = useState(false);
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		setFormState(false);
+
+		// validatiom
+		if (
+			formState.name !== "" &&
+			formState.name !== "" &&
+			formState.email !== "" &&
+			formState.bloodGroup !== "" &&
+			formState.Sex !== "" &&
+			policyState === true
+		) {
+			//send
+			setFormState({
+				formState: false,
+			});
+		}
 	};
-    
+
+	const handlePolicyOnChange = e => {
+		setPolicyState(!policyState);
+	};
+
+	const handleOnFormChange = e => {
+		setFormState({
+			...formState,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const handleOnReturnButton = e => {
+		setFormState({
+			name: "",
+			email: "",
+			bloodGroup: "Group 0",
+			Sex: "Male",
+			formState: true,
+		});
+		setPolicyState(false);
+	};
 
 	const FormClear = (
-		<form onSubmit={handleSubmit}>
+		<form onSubmit={handleSubmit} onChange={handleOnFormChange}>
 			<div className='elemContainer'>
 				<label htmlFor='name'> Name: </label>
 				<input
@@ -92,23 +135,27 @@ const Form = () => {
 			</div>
 
 			<div className='elemContainer'>
-				<input type='checkbox' id='Policy' name='Policy'></input>
+				<input
+					type='checkbox'
+					id='Policy'
+					name='Policy'
+					onChange={handlePolicyOnChange}></input>
 				<label htmlFor='Policy'>
 					acceptance of the regulations and privacy policy
 				</label>
 			</div>
-			<button type='submit'>Send</button>
+			<button onClick={handleSubmit}>Send</button>
 		</form>
 	);
 
 	const FormCompleted = (
 		<div>
 			<h2>Registration completed!</h2>
-			<button>Return</button>
+			<button onClick={handleOnReturnButton}>Return</button>
 		</div>
 	);
 
-	return <div>{formState ? FormClear : FormCompleted}</div>;
+	return <div>{formState.formState ? FormClear : FormCompleted}</div>;
 };
 
 export default Form;
