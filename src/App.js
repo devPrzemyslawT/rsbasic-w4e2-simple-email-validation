@@ -1,10 +1,12 @@
 import "./App.css";
 
+import Form from "./components/Registration/Form";
+
 function App() {
 	return (
 		<div className='App'>
 			<h1> Simple e-mail validation </h1>
-			<div className='elemContainer'>
+			{/* <div className='elemContainer'>
 				<label htmlFor='name'> Name: </label>
 				<input
 					id='name'
@@ -91,6 +93,9 @@ function App() {
 			</div>
 
 			<button type='submit'>Send</button>
+		*/}
+
+			<Form></Form>
 		</div>
 	);
 }
